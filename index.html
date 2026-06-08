@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Registro de Fallas - Xtreme Mining</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <img src="assets/logo_xtreme.png" alt="Xtreme Mining" class="logo" />
+    <div>
+      <h1>Registro de Fallas</h1>
+      <p>Formulario móvil con fotos, firma, PDF y Google Sheets</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card warning" id="configWarning">
+      <strong>Configuración pendiente:</strong> pega la URL de tu Web App de Apps Script en <b>app.js</b>, variable <b>SCRIPT_URL</b>.
+    </section>
+
+    <form id="formFalla" class="card form">
+      <div class="grid two">
+        <label>Fecha
+          <input type="date" id="fecha" required />
+        </label>
+        <label>Contrato
+          <select id="contrato" required>
+            <option value="">Seleccione</option>
+            <option>ANDESITA</option><option>NNM</option><option>DIAMANTE</option><option>P4600</option><option>TENIENTE 7</option><option>GABRIELA</option><option>OTRO</option>
+          </select>
+        </label>
+      </div>
+
+      <label>Operador denunciante
+        <input type="text" id="operador" placeholder="Nombre completo" required />
+      </label>
+
+      <label>Supervisor
+        <input type="text" id="supervisor" placeholder="Nombre supervisor" required />
+      </label>
+
+      <div class="grid two">
+        <label>Equipo
+          <select id="equipo" required></select>
+        </label>
+        <label>N° interno
+          <input type="text" id="interno" placeholder="Ej: J-187 / MAT-474" />
+        </label>
+      </div>
+
+      <div class="grid two">
+        <label>Tipo falla
+          <select id="tipoFalla" required>
+            <option value="">Seleccione</option>
+            <option>MECÁNICA</option><option>ELÉCTRICA</option><option>HIDRÁULICA</option><option>NEUMÁTICA</option><option>ESTRUCTURAL</option><option>INSTRUMENTACIÓN</option><option>MOTOR</option><option>TRANSMISIÓN</option><option>FRENOS</option><option>PERFORACIÓN</option><option>FORTIFICACIÓN</option><option>SISTEMA DE AGUA</option><option>SISTEMA DE AIRE</option><option>OTRO</option>
+          </select>
+        </label>
+        <label>Costo estimado
+          <input type="number" id="costo" min="0" step="1000" placeholder="CLP" />
+        </label>
+      </div>
+
+      <div class="grid two">
+        <label>Repuesto
+          <input type="text" id="repuesto" placeholder="Repuesto usado / requerido" />
+        </label>
+        <label>Tiempo falla
+          <input type="text" id="tiempoFalla" placeholder="Ej: 2 h / 1 turno" />
+        </label>
+      </div>
+
+      <label>N° OT
+        <input type="text" id="ot" placeholder="Orden de trabajo" />
+      </label>
+
+      <label>Descripción / observación
+        <textarea id="descripcion" rows="4" placeholder="Detalle de la falla, condición encontrada, acción inmediata..."></textarea>
+      </label>
+
+      <section class="photoBox">
+        <div class="sectionTitle">Imágenes de respaldo</div>
+        <p class="hint">Presiona “Tomar foto”. El sistema comprimirá cada imagen para que no quede pesado.</p>
+        <input id="fotos" type="file" accept="image/*" capture="environment" multiple />
+        <div id="previewFotos" class="preview"></div>
+      </section>
+
+      <section class="signatureBox">
+        <div class="sectionTitle">Firma del involucrado</div>
+        <canvas id="firma" width="700" height="240"></canvas>
+        <button type="button" class="btn ghost" id="limpiarFirma">Limpiar firma</button>
+      </section>
+
+      <div class="actions">
+        <button type="button" class="btn" id="generarPDF">Generar PDF</button>
+        <button type="submit" class="btn primary">Guardar en Google Sheets</button>
+      </div>
+      <div id="status" class="status"></div>
+    </form>
+
+    <section class="card">
+      <h2>Últimos registros locales</h2>
+      <div id="historial" class="history"></div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
